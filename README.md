@@ -5,7 +5,7 @@ This project is an end-to-end booking platform developed to allow property owner
 # Features:-
 -Property listing by owners
 -Customer property search and booking
--User authentication (login and logout)
+-User authentication 
 -Secure user data storage
 -Dynamic route handling
 
