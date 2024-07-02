@@ -16,6 +16,13 @@ const mime = require('mime-types');
 require('dotenv').config();
 const app = express();
 
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:5173',
+
+  methods:["GET","PUT","POST","DELETE","PATCH"]
+}));
+
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 const bucket = 'dawid-booking-app';
@@ -23,10 +30,8 @@ const bucket = 'dawid-booking-app';
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname+'/uploads'));
-app.use(cors({
-  credentials: true,
-  origin: 'http://127.0.0.1:5173',
-}));
+
+
 
 async function uploadToS3(path, originalFilename, mimetype) {
   const client = new S3Client({
@@ -63,7 +68,7 @@ app.get('/api/test', (req,res) => {
   res.json('test ok');
 });
 
-app.post('/api/register', async (req,res) => {
+app.post('/api/signup', async (req,res) => {
   mongoose.connect(process.env.MONGO_URL);
   const {name,email,password} = req.body;
 
@@ -80,7 +85,7 @@ app.post('/api/register', async (req,res) => {
 
 });
 
-app.post('/api/login', async (req,res) => {
+app.post('/api/signin', async (req,res) => {
   mongoose.connect(process.env.MONGO_URL);
   const {email,password} = req.body;
   const userDoc = await User.findOne({email});
@@ -154,7 +159,7 @@ app.post('/api/places', (req,res) => {
     if (err) throw err;
     const placeDoc = await Place.create({
       owner:userData.id,price,
-      title,address,photos:addedPhotos,description,
+      title,address,description,
       perks,extraInfo,checkIn,checkOut,maxGuests,
     });
     res.json(placeDoc);
@@ -188,7 +193,7 @@ app.put('/api/places', async (req,res) => {
     const placeDoc = await Place.findById(id);
     if (userData.id === placeDoc.owner.toString()) {
       placeDoc.set({
-        title,address,photos:addedPhotos,description,
+        title,address,description,
         perks,extraInfo,checkIn,checkOut,maxGuests,price,
       });
       await placeDoc.save();
@@ -226,4 +231,10 @@ app.get('/api/bookings', async (req,res) => {
   res.json( await Booking.find({user:userData.id}).populate('place') );
 });
 
-app.listen(4000);
+mongoose.connect(process.env.MONGO_URL).then((data)=>{
+     console.log("databaseconnected",data.connection.host);
+});
+app.listen(4000,()=> {
+  
+      console.log("server running");
+});

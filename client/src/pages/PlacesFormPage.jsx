@@ -22,7 +22,7 @@ export default function PlacesFormPage() {
     if (!id) {
       return;
     }
-    axios.get('/places/'+id).then(response => {
+    axios.get('http://localhost:4000/api/places/'+id).then(response => {
        const {data} = response;
        setTitle(data.title);
        setAddress(data.address);
@@ -64,13 +64,13 @@ export default function PlacesFormPage() {
     };
     if (id) {
       // update
-      await axios.put('/places', {
+      await axios.put('http://localhost:4000/api/places', {
         id, ...placeData
       });
       setRedirect(true);
     } else {
       // new place
-      await axios.post('/places', placeData);
+      await axios.post('http://localhost:4000/api/places', placeData);
       setRedirect(true);
     }
 
@@ -89,7 +89,7 @@ export default function PlacesFormPage() {
         {preInput('Address', 'Address to this place')}
         <input type="text" value={address} onChange={ev => setAddress(ev.target.value)}placeholder="address"/>
         {preInput('Photos','more = better')}
-        <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
+        {/* {<PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} /> */}
         {preInput('Description','description of the place')}
         <textarea value={description} onChange={ev => setDescription(ev.target.value)} />
         {preInput('Perks','select all the perks of your place')}
