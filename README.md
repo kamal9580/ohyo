@@ -71,6 +71,14 @@ MongoDB is a NoSQL database that stores data in JSON-like documents.
 
 1.User Interaction: The user interacts with the application through the React.js frontend. 
 
+
+![profilepage](https://github.com/kamal9580/ohyo/assets/106343913/958a5ba9-0a61-4329-b7c6-d41ee3d5c307)
+![2nd page](https://github.com/kamal9580/ohyo/assets/106343913/b6bfeb09-ae41-486e-946c-53817570a57c)
+![3rd page](https://github.com/kamal9580/ohyo/assets/106343913/9a908513-f499-4e0b-b8a7-59c57b2b00fc)
+![4th page](https://github.com/kamal9580/ohyo/assets/106343913/2da8f760-c697-4808-b356-b6b755d68e45)
+
+
+
 2.API Requests: The React.js frontend makes API requests to the Node.js and Express.js backend to retrieve or modify data. 
 
 3.Data  Storage: The backend processes these requests, performs any necessary validation or business logic, and interacts with the MongoDB database to store  data.
